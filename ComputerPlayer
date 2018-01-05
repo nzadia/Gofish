@@ -1,0 +1,13 @@
+public class ComputerPlayer extends Player
+// constructor which refers to the player class 
+    public ComputerPlayer(String name, Deck DeckRefrence){
+        
+        super(name, DeckRefrence);
+    }
+    public Card drawCard(){  // draws card for computer
+        Card c = super.drawCard(){ 
+           if(!GameConstants.HumanPlayer) System.out.println(this.name + " drew: " + c);
+        }
+        return c;
+    }
+}
