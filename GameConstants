@@ -1,0 +1,8 @@
+  public class GameConstants{
+    public static final int TotalPlayers = 3 // maximum opponents that a player can play with
+    public static final int StartCards = 7; // how many cards start in each players hand		
+    public static String PlayerName = ("Player"+ (c-1));				
+    public static final int GUARANTEED_CARD = 13; // constant used to determine if a player is 
+    // guaranteed to have a card in their hand		
+    public static boolean ComputerPlayer = false;						
+}
