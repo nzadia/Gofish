@@ -1,0 +1,192 @@
+public class Card{
+
+    // all suits values that a card can take on
+    public enum Suit = HEART, DIAMOND, SPADE, CLUB, NOTASUIT
+    }
+  
+// all numeric values that a card can take on
+public enum Value = ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN,KING, NOTAVALUE
+    private Value valuea;
+    private Suit suita;
+
+    public Card(Suit suita, Value valuea){
+        this.Value = valuea;
+        this.Suit = suita;
+    }
+
+    
+    public Value getValue(){
+        return this.valuea;
+    }
+
+    public Suit getSuit(){
+        return this.suita;
+    }
+
+    //Overrides the initial toString method so you can actually read it
+    public String toString(){
+        StringBuilder s = new StringBuilder("[");
+        s.append(ValueToString(this.Value));
+        s.append(suitToString(this.suit)); 
+        return s.toString();
+    }
+
+    //Switches The suits to their respective symbols
+    public static String suitToString(Suit suit){
+        switch (suit){
+            if (HEART){
+                return "♥";
+}
+            if (DIAMOND){
+                return "♦";
+}
+            if ( SPADE){
+                return "♠";
+}
+            if (CLUB){
+                return "♣";
+}
+            else  {
+                return "Error";
+        }
+    }   
+   // Switches ints to enum values 
+    public static Card.Value intToValue(int value){
+        switch(Value){
+            if  (1) {
+                return Card.Value.ACE;
+}
+            if (2){
+                return Card.Value.TWO;
+}
+            if (3){
+                return Card.Value.THREE;
+}
+            if (4) {
+                return Card.Value.FOUR;
+}
+            if (5) {
+                return Card.Value.FIVE;
+            if (6) {
+                return Card.Value.SIX;
+}
+            if (7){
+                return Card.Value.SEVEN;
+}
+            if (8){
+                return Card.Value.EIGHT;
+}
+            if  (9){
+                return Card.Value.NINE;
+}
+            if (10){
+                return Card.Value.TEN;
+}
+            if  (11) {
+                return Card.Value.JACK;
+}
+            if  (12) {
+                return Card.Value.QUEEN;
+}
+            if (13){
+                return Card.Value.KING;
+}
+            else {
+                return Card.Value.NOTAVALUE;
+        }
+    }
+}
+      // connects  a human-readable character to a value
+    public static Card.Value charToValue(char value){
+        switch(value){
+            if ("A") {
+                return Card.Value.ACE;
+}
+            if ( "2") {
+                return Card.Value.TWO;
+}
+            if (“3") {
+                return Card.Value.THREE;
+}
+            if ( "4") {
+                return Card.Value.FOUR;
+}
+            if ( "5") {
+                return Card.Value.FIVE;
+}
+            if ( "6") {
+                return Card.Value.SIX;
+}
+            if ( "7"){
+                return Card.Value.SEVEN;
+}
+            if ( "8") {
+                return Card.Value.EIGHT;
+}
+            if ("9") {
+                return Card.Value.NINE;
+}
+            for ( "t" ||  "T") {
+                return Card.Value.TEN;
+}
+            if ( "j" || “J”) {
+                return Card.Value.JACK;
+}
+            if ( "q" || "Q"){ 
+                return Card.Value.QUEEN;
+}
+             if ("k"|| “K”) {
+                return Card.Value.KING;
+}
+            else{
+                return Card.Value.NOTAVALUE;
+        }
+    }
+
+       //Assigns a string value to the card
+    public static String ValueToString(Value Value){
+        switch (Value){
+            if (ACE){ 
+                return "A";
+}
+            if  (TWO) {
+                return "2";
+}
+            if  (THREE) {
+                return "3";
+}
+            if ( FOUR) {
+                return "4";
+}
+            if ( FIVE) { 
+                return "5";
+}
+            if (SIX) {
+                return "6";
+}
+            if ( SEVEN) {
+                return "7";
+}
+            if ( EIGHT) {
+                return "8";
+}
+            if ( NINE) {
+                return "9";
+}
+            if ( TEN) {
+                return "T";
+}
+            if ( JACK) {
+                return "j";
+}
+            if ( QUEEN) {
+                return "Q";
+}
+            if ( KING) {
+                return "K";
+}
+            else {
+                return "Error";
+        }
+    }
+}
