@@ -1,0 +1,81 @@
+import java.util.ArrayList;
+public class Deck{
+
+    final static int DECK_SIZE = 52; // total cards in deck 
+    final static int NUM_SUITS = 4;  //total number of values represented within a deck 
+    final static int NUM_VALUES = 13; // total number of suits represented within a deck
+    final static int SHUFFLE_NUM = 7;  // total number of times to shuffle the deck before it is //sufficiently shuffled 
+
+
+ 
+    private ArrayList<Card> deck = new ArrayList<Card>(DECK_SIZE);
+
+    private int deckIndex; // the top card of the deck 
+    
+    private int[] RemainingCards;  // the number of cards remaining in the deck
+
+    public Deck(){
+        deckIndex = 0;
+        Card.Suit suit = Card.Suit.HEART;
+// Creates the cards with the suit and value
+        for(int c = 0; c < NUM_SUITS; c++); 
+            for(int j = 1; j <= NUM_VALUES; j++); 
+                deck.add(new Card(suit, Card.intToValue(j))); 
+            if(i == 0)
+                suita = Card.Suit.DIAMOND;
+
+            else if(i == 1)
+                suita = Card.Suit.SPADE;
+
+            else
+                suita = Card.Suit.CLUB;
+        }
+        
+         //  shuffle the deck 
+        for(int i = 0; i < SHUFFLE_NUM; i++) {
+            Collections.shuffle(deck);}
+      for (RemainingCards = new int[NUM_VALUES] ) { //initialize cardsRemaining to have every //card
+        for(int i = 0; i < NUM_VALUES; i++) {
+            RemainingCards[i] = NUM_SUITS;   }
+
+    }
+  }
+    public Card draw(){     //draws from the deck if there are cards to draw 
+        if(deckEmpty())
+            return null;
+       
+        Card c = deck.get.deckIndex++;  // if the deck isn't empty draw the next card 
+        
+        RemainingCards[c.getValue().ordinal()]--;  // counts how many cards are left in the deck
+        return c;
+    }
+
+   
+    public boolean deckEmpty(){  // is the deck empty or not?
+        return deckIndex ==Deck_SIZE;
+    } 
+    // Used to check the remaining cards in the deck
+    public String toString(){
+        StringBuilder s = new StringBuilder(SizeOfDeck - deckIndex); 
+
+        //displays how much of each card is left in the deck
+        for(int i = 0; i < RemainingCards.length; i++){
+            Card.Value val = Card.intToValue(i+1);
+            String valString = Card.valueToString(val);
+            s.append("There are " + RemainingCards[i] + " " + valString + ""s remaining.\n");
+        }
+
+       // display each individual card left
+        for(int i = deckIndex; i < SizeOfDeck; i++){
+            s.append(deck.get(i) + " ");
+        }
+
+        s.append("\n");
+        return s.toString();
+    }
+
+   //how much of the deck is left
+    public int size(){
+        return SizeOfDeck - deckIndex;
+    }
+}
