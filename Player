@@ -1,0 +1,133 @@
+import java.util.ArrayList;
+
+public abstract class Player{
+    private static final int MAX_TOTAL_score = 52;
+
+
+    private String name;
+    private Deck DeckRefrence;
+    private ArrayList<Card> hand;
+    private int score;
+    private int[] score = new int[MAX_TOTAL_score];
+
+// Constructor method for player 
+    private Player(String name, Deck DeckRefrence){
+        this.name = name;
+        this.DeckRefrence = DeckRefrence;
+        this.hand = new ArrayList<Card>();
+        this.score = 0;
+
+    }
+    public String getName(){
+        return name;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+// tracks of scoring a point and drawing a card to refill hand with draw card method
+    private void collectscores(Card.Value value, boolean drewCard){
+        score[value.ordinal()]++;
+        score++;
+        if(GoFish.initState)
+            GoFish.initialAlertscores(this, value, drewCard);
+        else
+            GoFish.alertscores(this, value, drewCard);
+    }
+
+// draw a card if any are left in the deck
+    public Card drawCard(){
+        Card newCard = DeckRefrence.draw();
+        if(newCard != null){
+            GoFish.incrementProbabilities(this);
+            Card.Value newValue = newCard.getValue(); //get the value of the new card
+            Card cardInHand = this.getCard(newValue);
+            if(cardInHand != null){
+                collectscores(newValue, true); 
+                hand.remove(cardInHand); // take away card from hand
+            }
+
+            else{
+                hand.add(newCard); // draw a card but no point 
+            }
+        }
+
+        return newCard;
+    }
+
+    public Card getCard(Card.Value val){
+        for(Card c: hand){
+            if(c.getValue() == val)
+                return c;
+        }
+
+        return null;
+    }
+
+// method returns TRUE if this player received the requested card from the other player
+    // returns FALSE if the player must go-fish
+    public boolean cardRequest(Card.Value val, Player HumanPlayer){
+        if(val == Card.Value.NOTAVALUE || HumanPlayer == null){
+            throw new IllegalArgumentException("Card"s value and player must exist");
+        }
+
+        Card requestedCard = HumanPlayer.getCard(val);
+        if(requestedCard != null){
+            HumanPlayer.hand.remove(requestedCard); 
+            Card playerCard = this.getCard(val);
+            this.hand.remove(playerCard);
+            collectscores(requestedCard.getValue(), false);
+            return true;
+        }
+
+        else Go-Fish 
+        return false;
+    }
+
+    public void displayHand(){ // displays the player hand 
+        StringBuilder s = new StringBuilder();
+        for(Card c : hand){
+            s.append("\t");
+            s.append(c.toString());
+        }
+       if(!GameConstants.ComputerPlayer) System.out.println(s);
+    }
+
+    public Card.Value[] cardsInHand(){ // the player’s hand 
+        Card.Value[] cards = new Card.Value[hand.size()];
+        for(int i = 0; i < hand.size(); i++){
+            cards[i] = hand.get(i).getValue();
+        }
+        return cards;
+    }
+    public int getHandSize(){ // tracks how many cards are in the hand 
+        return hand.size();
+    }
+
+    public boolean handEmpty(){ // is the hand empty
+        return hand.size() == 0;
+    }
+
+    public String toString(){
+        return getName();
+    }
+
+    public void displayState(){ // displays the hand and score 
+        String s = hand.toString();
+        s = s.substring(1,s.length()-1);
+       if(!GameConstants.ComputerPlayer System.out.printf("%s:\tScore: %d\tHand: %s\n", name, score, s); // in accordance with previous code (a formatted String assigned to a variable)
+    }
+
+    public void beginTurn(){ // turn begins 
+        if(!GameConstants.ComputerPlayer){
+            System.out.println(name + ""s turn.");
+            String scores = GoFish.scoresToString();
+            System.out.printf(scores);
+        } 
+    }
+    public void endTurn(){ // turn ends 
+       if(!GameConstants.ComputerPlayer) System.out.println(name + ""s score: " + score);
+    }
+
+}
