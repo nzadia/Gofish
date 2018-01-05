@@ -1,0 +1,487 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Map;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+
+public class GoFish{
+public static Scanner userIn = new Scanner(System.in);
+public static boolean initState; private static ArrayList<Player> allPlayers;
+private static Map <Player, ArrayList<Integer>> probability;
+private static Deck deck;
+private static Player user;
+private static int[] available;
+
+public static void main(String[] args){
+initGame();
+int player_index = chooseStartingPlayer();
+       if(!GameConstants.ComputerPlayer) System.out.printf("%s will begin the game\n", allPlayers.get(player_index));
+boolean gameOver = false; //boolean to end game when no deck and no hands remain 
+
+
+             System.out.print("Press enter to continue the game."); 
+                    if(!GameConstants.AUTO) System.in.read();
+                    clearScreen();
+}
+
+ while(!turnOver && !gameOver){ //Wait for the player to advance the game 
+         
+// player options
+ currentPlayer.beginTurn();
+                if(!GameConstants.ComputerPlayer) System.out.println(); //ask the current player who they would like to //request a card from
+ 
+
+                
+                for (Player requestedPlayer = selectPlayer(currentPlayer){ 
+            Card.Value requestedCard = selectCard(currentPlayer);
+                               RequestCard(currentPlayer, requestedCard);
+                if(!GameConstants.ComputerPlayer) System.out.println(currentPlayer + " asked " + requestedPlayer + " for a(n) " + Card.valueToString(requestedCard)) {
+
+                if(!currentPlayer.cardRequest(requestedCard, requestedPlayer)){
+                   
+                    GoFish(requestedPlayer, requestedCard);
+                    
+                    goFish(currentPlayer);
+                    
+                    turnOver = true;
+                    if(!GameConstants.ComputerPlayer) System.out.println();
+                }
+}
+}
+                else{
+                    
+                    if(!GameConstants.ComputerPlayer) {
+                        System.out.println("\n" + requestedPlayer + " handed " + currentPlayer + " the " + Card.valueToString(requestedCard));
+                        System.out.println(currentPlayer + "Has a score of" + Card.valueToString(requestedCard) + s);
+                    }
+                    
+                    decrementToZero(requestedPlayer, requestedCard);
+                    if(!GameConstants.ComputerPlayer) System.out.println();
+                }
+                While (gameOver = isGameOver){ 
+deck.deckEmpty(), currentPlayer, requestedPlayer)
+             }
+        }
+        return Winner();
+    }
+
+    
+    public static void initGame() throws InterruptedException{
+                initState = true;
+
+        
+        if(!GameConstants.ComputerPlayer) System.out.print("How many opponents (1-3)? ");
+        int numOpponents;
+        
+        if(!GameConstants.AUTO){
+            while(!((numOpponents = userIn.nextInt()) > 0 && numOpponents <= GameConstants.TotalPlayers)){
+               if(!GameConstants.ComputerPlayer){
+                    System.out.println("Number of Opponents must be between 0 and " + GameConstants.TotalPlayers);
+                    System.out.print("How many opponents (1 - " + GameConstants.TotalPlayers + ")? ");
+               } 
+            }
+
+            
+            userIn.nextLine();
+            if(!GameConstants.ComputerPlayer) System.out.println();
+        }
+
+        else{
+            numOpponents = 3;
+        }
+
+        deck = new Deck();
+        available = new int[]{52};
+        allPlayers = new ArrayList<Player>(numOpponents+1);    
+        if(GameConstants.AUTO)
+ComputerPlayer(GameConstants.PlayerName, deck) : new ComputerPlayer(GameConstants.PlayerName, deck);
+        else
+            user = new HumanPlayer(GameConstants.PlayerName, deck); 
+        allPlayers.add(user);
+        ArrayList<ComputerPlayer> opponents = new ArrayList<ComputerPlayer>(numOpponents);
+        for(int i = 0; i < numOpponents; i++){
+            ComputerPlayer opp = new ComputerPlayer("Player-"+(i+1), deck);
+                        opponents.add(opp);
+            allPlayers.add(opp);
+        } 
+        initProbability();
+        dealCards();
+        if(GameConstants && !GameConstants.ComputerPlayer){
+           System.out.println(deck);
+        }
+       if(!GameConstants.ComputerPlayer) System.out.println("\n");
+
+       
+        user.displayState();
+        if(GameConstants){
+            for(int i = 0; i < numOpponents; i++){
+                ComputerPlayer opp = opponents.get(i);
+                opp.displayState();
+            }
+        }
+        initState = false;
+    }
+
+    
+    public static void initProbability(){
+        probability = new HashMap<Player, ArrayList<Integer>>(allPlayers.size());
+
+        
+        for(Player p : allPlayers){
+            ArrayList<Integer> probabilityChart = new ArrayList<Integer>(DeckNumberValues);
+            for(int i = 0; i < DeckNumberValues; i++){
+                probabilityChart.add(0);
+            }
+
+            probability.put(p, probabilityChart);
+        }
+
+    }
+
+    
+    public static void dealCards() throws InterruptedException{
+        for(Player p: allPlayers){
+            for(int i = 0; i < GameConstants.StartCards; i++){
+                p.drawCard();
+                if(p instanceof HumanPlayer)
+                    delay(GameConstants.TimeDelay/2);
+            }
+        }
+    }
+
+
+   
+    public static int chooseStartingPlayer() throws InterruptedException{
+               int MaxRoll = 0;
+                int StartingPlayer = -1;
+        
+        Random r = new Random();
+
+       if(!GameConstants.ComputerPlayer) System.out.println("\n\nRolling 20 sided dice to decide starting player...");
+
+        
+        for(int i = 0; i < allPlayers.size(); i++){
+                       delay(GameConstants.TimeDelay);
+
+            
+            int PlayersRoll = r.nextInt(20)+1;
+            if(PlayersRoll > MaxRoll){
+                MaxRoll = PlayersRoll;
+                StartingPlayer = i;
+            }
+
+                      if(!GameConstants.ComputerPlayer) {
+        } 
+        assert StartingPlayer != -1; // assert used to declare expectant boolean condition
+        return StartingPlayer;
+    }
+
+       public static Player selectPlayer(Player currentPlayer){
+
+        
+        if(currentPlayer instanceof ComputerPlayer){
+            ComputerPlayer ComputerPlayer = (ComputerPlayer)currentPlayer;
+            return ComputerPlayer.getChoice().p;
+        }
+
+                else if(currentPlayer instanceof HumanPlayer){
+            
+           if(!GameConstants.ComputerPlayer) System.out.println("From which player do you want a card from? ");
+                        for(int i = 1; i < allPlayers.size(); i++){
+               if(!GameConstants.ComputerPlayer) System.out.println(i + ". " + allPlayers.get(i));
+            }
+            int request;
+            if(!GameConstants.ComputerPlayer) System.out.print("Selection: ");
+            while((request = userIn.nextInt()) < 1 || request >= allPlayers.size()){
+                if(!GameConstants.ComputerPlayer){
+                    System.out.println(“YOU NEED TO PICK SOMETHING ELSE!!");
+                    System.out.print("From which player do you want a card from? ");
+                } 
+
+                for(int i = 1; i < allPlayers.size(); i++){
+                   if(!GameConstants.ComputerPlayer) System.out.println(i + + allPlayers.get(i));
+                }
+               if(!GameConstants.ComputerPlayer) System.out.print("Selection: "+  userIn.nextLine(););
+            }
+           if(!GameConstants.ComputerPlayer) System.out.println();
+            return allPlayers.get(request);
+        }  
+        else{
+            
+            Random r = new Random();
+            Player playerChoice; 
+            while((playerChoice = allPlayers.get(r.nextInt(allPlayers.size()))) == currentPlayer){}
+
+            return playerChoice;
+        }
+    }
+
+    
+    public static Card.Value selectCard(Player currentPlayer){
+        
+        if(currentPlayer instanceof ComputerPlayer){
+            ComputerPlayer ComputerPlayerlayer = (ComputerPlayer)currentPlayer;
+            return ComputerPlayer.getChoice().c;
+        }
+
+        
+        else if(currentPlayer instanceof HumanPlayer){
+            
+            if(!GameConstants.ComputerPlayer) System.out.print("Current hand has cards: " + currentPlayer.displayHand());
+            if(!GameConstants.ComputerPlayer) System.out.print("The Requested card is"+Card.Value request);
+           return  String requestString;
+            while((requestString = userIn.nextLine()).equals("") || (request = Card.charToValue(requestString.charAt(0))) == Card.Value.Nonexistent || currentPlayer.getCard(request) == null){
+                if(!GameConstants.ComputerPlayer){
+                    System.out.println("That is not a valid choice.");
+                    System.out.print("Current hand: ");
+                }
+
+                currentPlayer.displayHand();
+                if(!GameConstants.ComputerPlayer) System.out.print("NOTE: T = 10\nSelect a card to request: ");
+            }
+            if(!GameConstants.ComputerPlayer) System.out.println();
+            return request;
+        }
+
+        else{
+            
+            Random r = new Random();
+            Card cardChoice;
+            
+            while((cardChoice = currentPlayer.getCard(Card.intToValue(r.nextInt(13) + 1))) == null){}
+            return cardChoice.getValue();
+        }
+    }
+
+       public static void initialAlertscore(Player p, Card.Value value, boolean drewCard){
+                available[value.ordinal()]-=2;
+                rate(p);
+        for (drewCard){
+            return rate(p); // rate of probability
+        }
+    }
+
+        public static void alertscore(Player p, Card.Value value, boolean drewCard){
+                available[value.ordinal()]-=2;
+        
+        decrementToZero(p, value);
+        for (drewCard){
+            reutrn rate(p);
+            probability.get(p).set(value.ordinal(), 0);
+        }
+
+    }
+
+        public static void goFish(Player p){
+                int PreviousScore = p.getScore();
+        if(!GameConstants.ComputerPlayer) System.out.println("\nGO-FISH!");
+        Card newCard = p.drawCard();
+               if(PreviousScore != p.getScore()){
+           if(!GameConstants.ComputerPlayer) System.out.println(p + " created a score of " + Card.valueToString(newCard.getValue()) + "s.");
+        }
+        if(!GameConstants.ComputerPlayer) System.out.println("You lost your turn");
+    }
+
+      public static void alertGoFish(Player r, Card.Value value){
+        probability.get(r).set(value.ordinal(), 0); // The java.lang.Enum.ordinal() method returns the ordinal of this enumeration constant (its position in its enum declaration, where the initial constant is assigned an ordinal of zero).
+    }
+
+        public static void RequestCard(Player p, Card.Value value){
+        probability.get(p).set(value.ordinal(), 1000);
+    }
+
+       public static void incrementProbabilities(Player p){
+        ArrayList<Integer> probabilityChart = probability.get(p);
+        for(int i = 0; i < probabilityChart.size(); i++){
+                        probabilityChart.set(i, probabilityChart.get(i)+1);
+                        if(probabilityChart.get(i) < 0){
+                probabilityChart.set(i, 1);
+            }
+        }
+    }
+
+    
+    public static void rate(Player p){
+        ArrayList<Integer> probabilityChart = probability.get(p);
+        for(int i = 0; i < probabilityChart.size(); i++){
+            if(probabilityChart.get(i) != 0)
+                probabilityChart.set(i, probabilityChart.get(i)-1);
+        }
+    }
+
+       public static void decrementToZero(Player p, Card.Value value){
+        rate(p);
+                probability.get(p).set(value.ordinal(), 0);
+    }
+
+      public static boolean isGameOver(boolean emptyDeck, Player current, Player other){
+        boolean gameOver = false;
+
+                if(emptyDeck){
+            if(!GameConstants.ComputerPlayer) System.out.println("Deck is empty!");
+            gameOver = true;
+        }
+
+       
+        else if(current.handEmpty()){
+            if(!GameConstants.ComputerPlayer) System.out.printf("%s"s hand is empty!\n", current.getName());
+            gameOver = true;
+        }
+
+        
+        else if(other.handEmpty()){
+            if(!GameConstants.ComputerPlayer) System.out.printf("%s"s hand is empty!\n", other.getName());
+            gameOver = true;
+        }
+
+        if(gameOver)
+            if(!GameConstants.ComputerPlayer) System.out.println("GAME OVER!");
+
+        return gameOver;
+    }
+
+    
+    public static void Winner() throws IOException{
+        Player winner = null;
+        int maxScore = 0;
+
+       
+        for(Player p: allPlayers){
+            int pScore = p.getScore();
+            if(pScore > maxScore){
+                maxScore = pScore;
+                winner = p;
+            }
+
+                        else if(pScore == maxScore){
+                if(winner != null)
+                    winner = p.handEmpty(p : winner);
+                else
+                    winner = p;
+            }
+        }
+
+        if(!GameConstants.ComputerPlayer){ 
+            System.out.printf("%s wins with a score of %d\n", winner.getName(), maxScore);
+           
+            String outcome = winner == user ? "Congrats" : "Better luck next time";
+            System.out.printf(outcome, user.getName());
+        }
+
+        if(GameConstants.LOG){
+            StringBuilder outcome = new StringBuilder();
+            outcome.append(winner == user ? "Congrats you won " : "sorry you lost, better luck next time ");
+            outcome.append(scoresToString());
+            ComputerPlayerLogger.out.println(outcome.toString());  
+            if(winner == user)
+                ComputerPlayerLogger.wins++;
+        }
+    }
+
+
+    public static void getProbabilities(){
+
+        ArrayList<ArrayList<PlayerCardTuple>> probabilitySet = new ArrayList<ArrayList<PlayerCardTuple>>(allPlayers.size()-1);
+
+            
+        for(int i = 1; i < allPlayers.size(); i++){
+
+            ArrayList<PlayerCardTuple> singleSet = new ArrayList<PlayerCardTuple>();
+           
+            if(!GameConstants.ComputerPlayer) System.out.print(allPlayers.get(i).toString() + ""s probabilities: ");
+
+            Card.Value cards[] = user.cardsInHand();
+
+            for(int j = 0; j < cards.length; j++){
+                double probability = calculateProbability(allPlayers.get(i), cards[j]);
+                singleSet.add(new PlayerCardTuple(allPlayers.get(i), cards[j], probability));
+                if(!GameConstants.ComputerPlayer) System.out.printf("\t%.1f%%",probability);
+            }
+
+            probabilitySet.add(singleSet);
+
+            if(!GameConstants.ComputerPlayer) System.out.println();
+        }
+
+        if(user instanceof ComputerPlayer){
+            ComputerPlayer auto_user = (ComputerPlayer)user;
+            auto_user.automateChoice(probabilitySet);
+        }
+    }
+
+
+    public static double calculateProbability(Player requestedPlayer, Card.Value card){
+        
+        int unknownInHands = 0;
+                int numRemaining = available[card.ordinal()];
+        
+        int unknownInRequestedHand = 0;
+
+        for(int i = 1; i < allPlayers.size(); i++){
+            Player currentPlayer = allPlayers.get(i);
+            int possibleNumInHand = probability.get(currentPlayer).get(card.ordinal());
+
+            
+            if(possibleNumInHand <= GameConstants.DeckTotal || currentPlayer == requestedPlayer)
+                unknownInHands += possibleNumInHand;
+            
+            
+            else if(numRemaining == 2)
+                return 0;
+
+            
+            if(currentPlayer == requestedPlayer)
+                unknownInRequestedHand = possibleNumInHand;
+            
+        }
+
+       
+        if(unknownInRequestedHand > GameConstants.DeckTotal)
+            return 100;
+
+        
+        if(unknownInHands == 0)
+            return 0;
+
+        
+        int totalUnknown = unknownInHands + deck.size();
+        double probability = (100.0*(numRemaining-1))/totalUnknown;
+        probability *= unknownInRequestedHand;
+
+                if(GameConstants.DEBUG){ // precautionary measures
+           if(!GameConstants.ComputerPlayer) System.out.println("\nunknownInHands = " + unknownInHands);
+           if(!GameConstants.ComputerPlayer) System.out.println("TotalUnknown = " + totalUnknown);
+           if(!GameConstants.ComputerPlayer) System.out.println("unknownInRequestedHand = " + unknownInRequestedHand);
+           if(!GameConstants.ComputerPlayer) System.out.println("numRemaining = " + (numRemaining-1));
+           if(!GameConstants.ComputerPlayer) System.out.println();
+        }
+
+        return probability;
+    }
+
+   
+    public static String scoresToString(){
+        StringBuilder s = new StringBuilder();
+        f.format("SCORES\t");
+        for(int i = 0; i < allPlayers.size(); i++){
+           f.format("%8s: %d\t", allPlayers.get(i).toString(), allPlayers.get(i).getScore());
+        }
+        f.format("\n");
+
+        return s.toString();
+    }
+
+    public static void delay(int time) throws InterruptedException{
+        if(!GameConstants.ComputerPlayer){
+            Thread.sleep(time);
+        }
+    }
+
+        public static void clearScreen(){ // clears screen 
+        if(!GameConstants.ComputerPlayer){
+           System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); // it just clears the screen so the user doesn't have to do that manually, this is a "console clear" but I don't know what that means
+        }
+    }
+}
+
