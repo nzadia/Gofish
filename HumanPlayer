@@ -1,0 +1,24 @@
+public class HumanPlayer extends Player{
+// constructor which refers to the player class 
+    public HumanPlayer(String name, Deck DeckRefrence){
+        super(name, DeckRefrence);
+    }
+    public Card drawCard(){
+        Card c = super.drawCard(); //super overruled
+        if(c != null){
+           if(!GameConstants.ComputerPlayer) System.out.println(this.name + " drew: " + c);
+        }
+        return c;
+    }
+
+    public void beginTurn(){
+        super.beginTurn();
+        if(!GameConstants.ComputerPlayer) System.out.println("Current hand:"+ displayHand(););
+        GoFish.getProbabilities();
+    }
+    
+    public void endTurn(){
+        super.endTurn();
+       if(!GameConstants.ComputerPlayer) System.out.print("Current hand: “ + displayHand(); // shows hand
+    }
+}
