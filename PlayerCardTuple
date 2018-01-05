@@ -1,0 +1,17 @@
+public class PlayerCardTuple{ //A tuple is a finite ordered list of elements
+    public Player p;
+    public Card.Value c;
+    public double prob; 
+
+    public PlayerCardTuple(){
+        this.p = null;
+        this.c = Card.Value.NOTAVALUE;
+        this.prob = 0;
+    }
+
+    public PlayerCardTuple(Player p, Card.Value c, double prob){
+        this.p = p;
+        this.c = c;
+        this.prob = prob;
+    }
+}
